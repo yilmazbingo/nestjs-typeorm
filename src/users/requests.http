@@ -1,0 +1,50 @@
+
+### Signup user
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+    "email":"test1@test.com",
+    "password":"fadfds"
+}
+
+
+
+
+### signin 
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email":"test@test.co",
+    "password":"fadfds"
+}
+
+###
+GET http://localhost:3000/auth/1
+
+
+### Find all users with given email
+GET http://localhost:3000/auth?email=dfdafd@hotmail.com
+
+
+### dELETE USER GIVEN ID
+DELETE http://localhost:3000/auth/1
+
+
+###
+PATCH http://localhost:3000/auth/2
+
+Content-Type: application/json
+
+{
+    "email":"yilmazbingo@hotmail.com"
+}
+
+
+### Get the Current user
+GET http://localhost:3000/auth/whoami
+
+
+### signout
+POST  http://localhost:3000/auth/signout
