@@ -1,3 +1,4 @@
+//teting app module
 import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -22,23 +23,26 @@ const cookieSession = require('cookie-session');
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
+    // setting ormconfig.js
+    TypeOrmModule.forRoot(),
     // Notice we are not using TypeOrmModule.forRoot({})
     // we set this to get access to ConfigService through dependency injection system
-    TypeOrmModule.forRootAsync({
-      // this tell DI system, find the configService which has all of the config info
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => {
-        return {
-          type: 'sqlite',
-          database: config.get<string>('DB_NAME'),
-          // whenever our app starts up, typeorm is going to look at User Entity properties and types and compare it with the User table in database.
-          // if u go to UserEntity and delete a property, and restart the app, when typeorm reads the UserEntity next time, it sees that that property no longer exists. it willl go to db, find the Users table and automatically remove that column from the table. if we add a property to UserEntity, this time it will add a new column to the table
-          //this is extremely uncommon behavior. in prod we use migrations
-          synchronize: true,
-          entities: [User, Report],
-        };
-      },
-    }),
+
+    // TypeOrmModule.forRootAsync({
+    //   // this tell DI system, find the configService which has all of the config info
+    //   inject: [ConfigService],
+    //   useFactory: (config: ConfigService) => {
+    //     return {
+    //       type: 'sqlite',
+    //       database: config.get<string>('DB_NAME'),
+    //       // whenever our app starts up, typeorm is going to look at User Entity properties and types and compare it with the User table in database.
+    //       // if u go to UserEntity and delete a property, and restart the app, when typeorm reads the UserEntity next time, it sees that that property no longer exists. it willl go to db, find the Users table and automatically remove that column from the table. if we add a property to UserEntity, this time it will add a new column to the table
+    //       //this is extremely uncommon behavior. in prod we use migrations
+    //       synchronize: true,
+    //       entities: [User, Report],
+    //     };
+    //   },
+    // }),
 
     //-- we need to change the setting for environment configuration
     // TypeOrmModule.forRoot({
